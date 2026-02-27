@@ -45,9 +45,14 @@ async def main():
             if choice == "1":
                 print("Your question")
                 query = input("> ")
-                response = agent.invoke(
+                response = await agent.ainvoke(
                     {
-                        "messages":query
+                        "messages":[
+                            {"role": "system", "content": "You are a smart, useful agent with tools to access code library documentation and the Met Museum collection."},
+                            {
+                                "role":"user", "content":query
+                            }
+                        ]
                     },
                     config = {"configurable": {"thread_id": "conversation_id"}}
                 )
